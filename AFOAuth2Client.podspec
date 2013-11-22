@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                  :tag => '0.1.2' }
   s.source_files = 'AFOAuth2Client'
   s.requires_arc = true
-  s.ios.deployment_target = '6.0'
+  s.ios.deployment_target = '7.0'
 
   s.dependency 'AFNetworking', '~>1.3'
 
