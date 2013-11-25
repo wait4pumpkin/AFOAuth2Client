@@ -173,7 +173,11 @@ static NSMutableDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *i
     self.responseSerializer = [AFHTTPResponseSerializer serializer];
 
     AFHTTPRequestOperation *requestOperation = [self HTTPRequestOperationWithRequest:mutableRequest success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@", [[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]);
+        
+        SEL selector = NSSelectorFromString(@"valueForKey");
+        if (![responseObject respondsToSelector:selector]) {
+            responseObject = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        }
         if ([responseObject valueForKey:@"error"]) {
             if (failure) {
                 // TODO: Resolve the `error` field into a proper NSError object
